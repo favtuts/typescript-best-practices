@@ -85,5 +85,58 @@ The contents of the  package.json file  will be as follows:
 
 Open a command window in the project directory and type the command:
 ```bash
-npm start
+$ npm start
+
+> vscode-typescript-debugging@1.0.0 prestart
+> npm run build
+
+
+> vscode-typescript-debugging@1.0.0 build
+> tsc
+
+
+> vscode-typescript-debugging@1.0.0 start
+> node out/app.js
+
+Hello world!
 ```
+
+
+# Debugging
+
+Still in the project folder, create another folder “.vscode” and add a file ‘launch.json” with the following content:
+
+```json
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Build Project",
+            "program": "${workspaceFolder}/src/app.ts",
+            "preLaunchTask": "npm: build",
+            "sourceMaps": true,
+            "smartStep": true,
+            "internalConsoleOptions": "openOnSessionStart",
+            "outFiles": [
+                 "${workspaceFolder}/out/**/*.js"
+           ]
+        }
+    ]
+}
+```
+
+Ok, so we have finished the configuration, now to debug typescript, you do as usual, set a breakpoint and run the program to call the line of code you just set the breakpoint on.
+
+![vs-debug-console](./images/debug-console-visual-code.png)
+
+
+# Conditional Breakpoints
+
+With conditional breakpoints, you can use “Expression” or “Hit Count” as the condition.
+
+* Expression : Same as if conditional statement, if expression returns true then breakpoint there.
+* Hit Count : Number of times that line of code is called until the hit count is reached, then the breakpoint stops.
+
+![breakpoint-condition](./images/breakpoint-condition.gif)
