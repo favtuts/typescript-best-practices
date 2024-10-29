@@ -59,3 +59,31 @@ How to create package.json file using command as follows:
 ```bash
 npm init –yes
 ```
+
+Then we install Typescript for the project
+```bash
+npm install typescript --save-dev
+```
+
+The contents of the  package.json file  will be as follows:
+```json
+{
+  "name": "vscode-typescript-debugging",
+  "version": "1.0.0",
+  "devDependencies": {
+    "typescript": "^2.7.2"
+  },
+  "scripts": {
+    "start": "node out/app.js",
+    "prestart": "npm run build",
+    "build": "tsc"
+  }
+}
+```
+
+# Run Node application
+
+Open a command window in the project directory and type the command:
+```bash
+npm start
+```

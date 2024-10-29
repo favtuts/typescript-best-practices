@@ -4,9 +4,15 @@
   "description": "* https://tuts.heomi.net/how-to-debug-typescript-on-visual-studio-code/",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node out/app.js",
+    "prestart": "npm run build",
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^5.6.3"
+  }
 }
