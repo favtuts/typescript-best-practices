@@ -307,9 +307,9 @@ person = {
 ```
 
 
-When defining the signature of an object, you will usually use an interface.
+When defining the signature of an object, you will usually use an `interface`.
 ```ts
-nterface Person {
+interface Person {
   name: string;
   location: string;
   isProgrammer: boolean;
@@ -328,7 +328,7 @@ let person2: Person = {
 };
 ```
 
-We can also declare function properties with function signatures.
+We can also declare function properties with function signatures. We can do this using old-school common JavaScript functions (`sayHi`), or ES6 arrow functions (`sayBye`):
 ```ts
 interface Speech {
   sayHi(name: string): string;
@@ -346,6 +346,77 @@ console.log(sayStuff.sayHi('Heisenberg')); // Hi Heisenberg
 console.log(sayStuff.sayBye('Heisenberg')); // Bye Heisenberg
 ```
 
+Note that in the `sayStuff` object, `sayHi` or `sayBye` could be given an arrow function or a common JavaScript function – TypeScript doesn’t care.
+
 
 # Functions in TypeScript
+
 We can define what the types the function arguments should be, as well as the return type of the function:
+```ts
+// Define a function called circle that takes a diam variable of type number, and returns a string
+function circle(diam: number): string {
+  return 'The circumference is ' + Math.PI * diam;
+}
+
+console.log(circle(10)); // The circumference is 31.41592653589793
+```
+
+The same function, but with an ES6 arrow function:
+```ts
+const circle = (diam: number): string => {
+  return 'The circumference is ' + Math.PI * diam;
+};
+
+console.log(circle(10)); // The circumference is 31.41592653589793
+```
+
+Notice how it isn’t necessary to explicitly state that `circle` is a function; TypeScript infers it. TypeScript also infers the return type of the function, so it doesn’t need to be stated either. Although, if the function is large, some developers like to explicitly state the return type for clarity.
+
+```ts
+// Using explicit typing 
+const circle: Function = (diam: number): string => {
+  return 'The circumference is ' + Math.PI * diam;
+};
+
+// Inferred typing - TypeScript sees that circle is a function that always returns a string, so no need to explicitly state it
+const circle = (diam: number) => {
+  return 'The circumference is ' + Math.PI * diam;
+};
+```
+
+We can add a question mark after a parameter to make it optional. Also notice below how c is a union type that can be a `number` or `string`:
+
+```ts
+const add = (a: number, b: number, c?: number | string) => {
+  console.log(c);
+
+  return a + b;
+};
+
+console.log(add(5, 4, 'I could pass a number, string, or nothing here!'));
+// I could pass a number, string, or nothing here!
+// 9
+```
+
+A function that returns nothing is said to return `void` – a complete lack of any value. Below, the return type of void has been explicitly stated. But again, this isn’t necessary as TypeScript will infer it.
+
+```ts
+const logMessage = (msg: string): void => {
+  console.log('This is the message: ' + msg);
+};
+
+logMessage('TypeScript is superb'); // This is the message: TypeScript is superb
+```
+
+If we want to declare a function variable, but not define it (say exactly what it does), then use a function signature. Below, the function `sayHello` must follow the signature after the colon:
+```ts
+// Declare the varible sayHello, and give it a function signature that takes a string and returns nothing.
+let sayHello: (name: string) => void;
+
+// Define the function, satisfying its signature
+sayHello = (name) => {
+  console.log('Hello ' + name);
+};
+
+sayHello('Danny'); // Hello Danny
+```

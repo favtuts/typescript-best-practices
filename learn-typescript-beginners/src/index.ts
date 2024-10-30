@@ -1,4 +1,5 @@
 let sport = 'football';
+console.log(sport);
 
 let id = 5;
 

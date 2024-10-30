@@ -9,12 +9,14 @@ let person1: Person = {
   location: 'UK',
   isProgrammer: true,
 };
+console.log(person1);
 
 let person2: Person = {
   name: 'Sarah',
   location: 'Germany',
   isProgrammer: false,
 };
+console.log(person2);
 
 interface Speech {
   sayHi(name: string): string;
