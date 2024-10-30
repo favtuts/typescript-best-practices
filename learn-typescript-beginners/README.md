@@ -135,6 +135,43 @@ $ tsc -w
 Note: when input files are specified on the command line (for example, `tsc index`), `tsconfig.json` files are ignored.
 
 
+# Debuging TS File with VSCode
+* https://stackoverflow.com/questions/31169259/how-to-debug-typescript-files-in-visual-studio-code
+
+First you need to install:
+```bash
+npm i ts-node
+```
+
+Then create `launch.json` for NodeJs type like (full in case, but you can grab only this one configurations from):
+```json
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch TS",
+            "type": "node",
+            "request": "launch",
+            "runtimeArgs": [
+                "-r",
+                "ts-node/register"
+            ],
+            "args": [
+                "${workspaceFolder}/${fileBasename}"
+            ]
+        }
+    ]
+}
+```
+
+Open the TS file and set breakpoint, you can start the debuging for that file.
+
+# Format Code in VSCode
+
+* Format Document (Ctrl+Shift+I) 
+* Format the entire active file. Format Selection (Ctrl+K Ctrl+F) - Format the selected text.
+* On Windows Shift + Alt + F
+
 # Primitive types in TypeScript
 
 In JavaScript, a primitive value is data that is not an object and has no methods. There are 7 primitive data types: string, number, bigint, boolean, undefined, null, symbol.  Primitives are immutable: they can't be altered. Example:
