@@ -166,6 +166,23 @@ Then create `launch.json` for NodeJs type like (full in case, but you can grab o
 
 Open the TS file and set breakpoint, you can start the debuging for that file.
 
+
+# How to run TypeScript files from command line
+* https://stackoverflow.com/questions/33535879/how-to-run-typescript-files-from-command-line
+
+You can leave `tsc` running in watch mode using `tsc -w -p` . and it will generate `.js` files for you in a live fashion, so you can run node `foo.js` like normal
+
+```bash
+tsc src/index.ts
+node dist/index.js
+```
+
+There is ts-node : https://github.com/TypeStrong/ts-node that will compile the code on the fly and run it through node 🌹
+
+```bash
+npx ts-node src/foo.ts
+```
+
 # Format Code in VSCode
 
 * Format Document (Ctrl+Shift+I) 
@@ -215,6 +232,25 @@ A union type is a variable that can be assigned more than one type:
 let age: string | number;
 age = 26;
 age = '26';
+```
+
+# Reference Types
+
+In JavaScript, almost “everything” is an object. In fact (and confusingly), strings, numbers and booleans can be objects if defined with the `new` keyword:
+
+```js
+let firstname = new String('Danny');
+console.log(firstname); // String {'Danny'}
+```
+
+But when we talk of reference types in JavaScript, we are referring to arrays, objects and functions.
+
+```ts
+let point1 = { x: 1, y: 1 };
+let point2 = point1;
+
+point1.y = 100;
+console.log(point2.y); // 100 (point1 and point2 refer to the same memory address where the point object is stored)
 ```
 
 # Arrays in TypeScript
