@@ -519,3 +519,106 @@ form.addEventListener('submit', (e: Event) => {
   console.log(e.tarrget); // ERROR: Property 'tarrget' does not exist on type 'Event'. Did you mean 'target'?
 });
 ```
+
+# Classes in TypeScript
+
+We can define the types that each piece of data should be in a class:
+```ts
+class Person {
+  name: string;
+  isCool: boolean;
+  pets: number;
+
+  constructor(n: string, c: boolean, p: number) {
+    this.name = n;
+    this.isCool = c;
+    this.pets = p;
+  }
+
+  sayHello() {
+    return `Hi, my name is ${this.name} and I have ${this.pets} pets`;
+  }
+}
+
+const person1 = new Person('Danny', false, 1);
+const person2 = new Person('Sarah', 'yes', 6); // ERROR: Argument of type 'string' is not assignable to parameter of type 'boolean'.
+
+console.log(person1.sayHello()); // Hi, my name is Danny and I have 1 pets
+```
+
+We could then create a `people` array that only includes objects constructed from the `Person` class:
+```ts
+let People: Person[] = [person1, person2];
+```
+
+We can add access modifiers to the properties of a class. TypeScript also provides a new access modifier called `readonly`.
+```ts
+class Person {
+  readonly name: string; // This property is immutable - it can only be read
+  private isCool: boolean; // Can only access or modify from methods within this class
+  protected email: string; // Can access or modify from this class and subclasses
+  public pets: number; // Can access or modify from anywhere - including outside the class
+
+  constructor(n: string, c: boolean, e: string, p: number) {
+    this.name = n;
+    this.isCool = c;
+    this.email = e;
+    this.pets = p;
+  }
+
+  sayMyName() {
+    console.log(`Your not Heisenberg, you're ${this.name}`);
+  }
+}
+
+const person1 = new Person('Danny', false, 'dan@e.com', 1);
+console.log(person1.name); // Fine
+person1.name = 'James'; // Error: read only
+console.log(person1.isCool); // Error: private property - only accessible within Person class
+console.log(person1.email); // Error: protected property - only accessible within Person class and its subclasses
+console.log(person1.pets); // Public property - so no problem
+```
+
+We can make our code more concise by constructing class properties this way:
+
+```ts
+class Person {
+  constructor(
+    readonly name: string,
+    private isCool: boolean,
+    protected email: string,
+    public pets: number
+  ) {}
+
+  sayMyName() {
+    console.log(`Your not Heisenberg, you're ${this.name}`);
+  }
+}
+
+const person1 = new Person('Danny', false, 'dan@e.com', 1);
+console.log(person1.name); // Danny
+```
+
+Writing it the above way, the properties are automatically assigned in the constructor – saving us from having to write them all out.
+
+Note that if we omit the access modifier, by default the property will be `public`.
+
+Classes can also be extended, just like in regular JavaScript:
+
+```ts
+class Programmer extends Person {
+  programmingLanguages: string[];
+
+  constructor(
+    name: string,
+    isCool: boolean,
+    email: string,
+    pets: number,
+    pL: string[]
+  ) {
+    // The super call must supply all parameters for base (Person) class, as the constructor is not inherited.
+    super(name, isCool, email, pets);
+    this.programmingLanguages = pL;
+  }
+}
+```
