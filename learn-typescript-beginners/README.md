@@ -420,3 +420,50 @@ sayHello = (name) => {
 
 sayHello('Danny'); // Hello Danny
 ```
+
+# Dynamic (any) types
+
+Using the `any` type, we can basically revert TypeScript back into JavaScript:
+
+```ts
+let age: any = '100';
+age = 100;
+age = {
+  years: 100,
+  months: 2,
+};
+```
+
+It’s recommended to avoid using the `any` type as much as you can, as it prevents TypeScript from doing its job – and can lead to bugs.
+
+
+# Type Aliases
+
+Type Aliases can reduce code duplication, keeping our code DRY. Below, we can see that the `PersonObject` type alias has prevented repetition, and acts as a single source of truth for what data a person object should contain.
+
+```ts
+type StringOrNumber = string | number;
+
+type PersonObject = {
+  name: string;
+  id: StringOrNumber;
+};
+
+const person1: PersonObject = {
+  name: 'John',
+  id: 1,
+};
+
+const person2: PersonObject = {
+  name: 'Delia',
+  id: 2,
+};
+
+const sayHello = (person: PersonObject) => {
+  return 'Hi ' + person.name;
+};
+
+const sayGoodbye = (person: PersonObject) => {
+  return 'Seeya ' + person.name;
+};
+```
