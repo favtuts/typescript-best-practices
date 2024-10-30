@@ -656,3 +656,135 @@ sayHi(); // Hello there!
 ```
 
 Note: always import as a JavaScript file, even in TypeScript files.
+
+# Interfaces in TypeScript
+
+Interfaces define how an object should look:
+```ts
+interface Person {
+  name: string;
+  age: number;
+}
+
+function sayHi(person: Person) {
+  console.log(`Hi ${person.name}`);
+}
+
+sayHi({
+  name: 'John',
+  age: 48,
+}); // Hi John
+```
+
+Interfaces are very similar to type aliases, and in many cases you can use either. The key distinction is that type aliases cannot be reopened to add new properties, vs an interface which is always extendable.
+
+Extending an interface:
+```ts
+interface Animal {
+  name: string
+}
+
+interface Bear extends Animal {
+  honey: boolean
+}
+
+const bear: Bear = {
+  name: "Winnie",
+  honey: true,
+}
+```
+
+Extending a type via intersections:
+```ts
+type Animal = {
+  name: string
+}
+
+type Bear = Animal & {
+  honey: boolean
+}
+
+const bear: Bear = {
+  name: "Winnie",
+  honey: true,
+}
+```
+
+Adding new fields to an existing interface:
+```ts
+interface Animal {
+  name: string
+}
+
+// Re-opening the Animal interface to add a new field
+interface Animal {
+  tail: boolean
+}
+
+const dog: Animal = {
+  name: "Bruce",
+  tail: true,
+}
+```
+
+Here’s the key difference: a type cannot be changed after being created:
+```ts
+type Animal = {
+  name: string
+}
+
+type Animal = {
+  tail: boolean
+}
+// ERROR: Duplicate identifier 'Animal'.
+```
+
+As a rule of thumb, the TypeScript docs recommend using interfaces to define objects, until you need to use the features of a type.
+
+Interfaces can also define function signatures:
+```ts
+interface Person {
+  name: string
+  age: number
+  speak(sentence: string): void
+}
+
+const person1: Person = {
+  name: "John",
+  age: 48,
+  speak: sentence => console.log(sentence),
+}
+```
+
+# Interfaces with classes
+
+We can tell a class that it must contain certain properties and methods by implementing an interface:
+```ts
+interface HasFormatter {
+  format(): string;
+}
+
+class Person implements HasFormatter {
+  constructor(public username: string, protected password: string) {}
+
+  format() {
+    return this.username.toLocaleLowerCase();
+  }
+}
+
+// Must be objects that implement the HasFormatter interface
+let person1: HasFormatter;
+let person2: HasFormatter;
+
+person1 = new Person('Danny', 'password123');
+person2 = new Person('Jane', 'TypeScripter1990');
+
+console.log(person1.format()); // danny
+```
+
+Ensure that `people` is an array of objects that implement `HasFormatter` (ensures that each person has the format method):
+```ts
+let people: HasFormatter[] = [];
+people.push(person1);
+people.push(person2);
+```

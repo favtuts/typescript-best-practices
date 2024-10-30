@@ -4,19 +4,19 @@ interface Person {
   isProgrammer: boolean;
 }
 
-let person1: Person = {
+let personDN: Person = {
   name: 'Danny',
   location: 'UK',
   isProgrammer: true,
 };
-console.log(person1);
+console.log(personDN);
 
-let person2: Person = {
+let personSA: Person = {
   name: 'Sarah',
   location: 'Germany',
   isProgrammer: false,
 };
-console.log(person2);
+console.log(personSA);
 
 interface Speech {
   sayHi(name: string): string;
