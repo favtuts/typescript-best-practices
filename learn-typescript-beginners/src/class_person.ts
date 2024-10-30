@@ -1,4 +1,4 @@
-class Person {
+class PersonClass {
     name: string;
     isCool: boolean;
     pets: number;
@@ -14,7 +14,7 @@ class Person {
     }
 }
 
-const varPerson1 = new Person('Danny', false, 1);
+const varPerson1 = new PersonClass('Danny', false, 1);
 //const varPerson2 = new Person('Sara', 'yes', 6); // ERROR: Argument of type 'string' is not assignable to parameter of type 'boolean'.
 
 console.log(varPerson1.sayHello()); // Hi, my name is Danny and I have 1 pets
